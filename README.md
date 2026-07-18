@@ -96,7 +96,7 @@ Open frontend/index.html using a Live Server extension in VS Code.
 
 ---
 
-​## 🚀 Future Scope & Upgrades
+## 💻 Future Scope & Upgrades
 
 ​This project is built with scalability in mind. Future upgrades include:
 ​Migration to PostgreSQL (AWS RDS / Supabase) for cloud database management.
