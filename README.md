@@ -61,5 +61,5 @@ To run this project locally, follow these steps:
 
 **1. Clone the repository:**
 ```bash
-git clone [https://github.com/YourUsername/nexora-ai-content-studio.git](https://github.com/YourUsername/nexora-ai-content-studio.git)
+git clone [(https://hardikkhandal01.github.io/nexora-ai-content-studio/)](https://hardikkhandal01.github.io/nexora-ai-content-studio/)
 cd nexora-ai-content-studio
