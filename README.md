@@ -23,7 +23,7 @@ Nexora AI is a comprehensive SaaS platform designed to eliminate writer's block.
 
 ### AI Dashboard Workspace
 *(Showcasing the ChatGPT-style chat interface, sidebar tools, and export functionality)*
-(![Assets/dashboard (2).png)](<Assets/dashboard (2).png>))
+(![Assets/dashboard (2).png](<Assets/dashboard (2).png>))
 
 ---
 
@@ -61,5 +61,5 @@ To run this project locally, follow these steps:
 
 **1. Clone the repository:**
 ```bash
-git clone [(https://hardikkhandal01.github.io/nexora-ai-content-studio/)](https://hardikkhandal01.github.io/nexora-ai-content-studio/)
+git clone (![https://hardikkhandal01.github.io/nexora-ai-content-studio/](https://hardikkhandal01.github.io/nexora-ai-content-studio/))
 cd nexora-ai-content-studio
