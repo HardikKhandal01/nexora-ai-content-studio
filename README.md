@@ -65,6 +65,7 @@ git clone [https://github.com/YourUsername/nexora-ai-content-studio.git](https:/
 cd nexora-ai-content-studio
 
 **2. Setup Virtual Environment:**
+```bash
 python -m venv .venv
 # On Windows
 .venv\Scripts\activate
@@ -72,11 +73,13 @@ python -m venv .venv
 source .venv/bin/activate
 
 **3. Install Dependencies:**
+```bash
 cd backend
 pip install -r requirements.txt
 
 **4. Environment Variables:**
 Create a .env file inside the backend/ directory and add your credentials:
+env
 GEMINI_API_KEY=your_gemini_api_key_here
 SECRET_KEY=your_secure_random_string
 ALGORITHM=HS256
@@ -84,6 +87,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES=1440
 DATABASE_URL=sqlite:///./nexora.db
 
 **5. Start the FastAPI Server:**
+```bash
 uvicorn main:app --reload
 The API will be running at http://127.0.0.1:8000 (Visit /docs for Swagger UI).
 
@@ -92,7 +96,8 @@ Open frontend/index.html using a Live Server extension in VS Code.
 
 ---
 
-​🚀 Future Scope & Upgrades
+​## 🚀 Future Scope & Upgrades
+
 ​This project is built with scalability in mind. Future upgrades include:
 ​Migration to PostgreSQL (AWS RDS / Supabase) for cloud database management.
 ​Integration of Stripe/Razorpay for subscription-based billing (SaaS model).
@@ -102,5 +107,5 @@ Open frontend/index.html using a Live Server extension in VS Code.
 <p>Developed with passion by <b>Your Name</b></p>
 </div>
 =======
-git clone (![https://hardikkhandal01.github.io/nexora-ai-content-studio/](https://hardikkhandal01.github.io/nexora-ai-content-studio/))
+git clone (![https://YourUsername/nexora-ai-content-studio/](https://YourUsername/nexora-ai-content-studio/))
 cd nexora-ai-content-studio
