@@ -23,7 +23,7 @@ Nexora AI is a comprehensive SaaS platform designed to eliminate writer's block.
 
 ### AI Dashboard Workspace
 *(Showcasing the ChatGPT-style chat interface, sidebar tools, and export functionality)*
-([Assets/dashboard (2).png)](<Assets/dashboard (2).png>))
+(![Assets/dashboard (2).png)](<Assets/dashboard (2).png>))
 
 ---
 
