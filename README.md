@@ -101,3 +101,6 @@ Open frontend/index.html using a Live Server extension in VS Code.
 ​<div align="center">
 <p>Developed with passion by <b>Your Name</b></p>
 </div>
+=======
+git clone (![https://hardikkhandal01.github.io/nexora-ai-content-studio/](https://hardikkhandal01.github.io/nexora-ai-content-studio/))
+cd nexora-ai-content-studio
