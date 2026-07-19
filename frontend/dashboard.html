@@ -23,34 +23,35 @@
                 <span>Nexora<span class="highlight">AI</span></span>
             </a>
             
-            <div class="sidebar-menu">
-                <p class="menu-label">AI TOOLS</p>
-                <ul id="toolList">
-                    <li class="active" data-tool="Blog Generator">
-                        <i class="fa-solid fa-pen-nib"></i> Blog Generator
-                    </li>
-                    <li data-tool="Google Ads Copy">
-                        <i class="fa-brands fa-google"></i> Google Ads Copy
-                    </li>
-                    <li data-tool="SEO Keywords">
-                        <i class="fa-solid fa-magnifying-glass-chart"></i> SEO Keywords
-                    </li>
-                    <li data-tool="Instagram Captions">
-                        <i class="fa-brands fa-instagram"></i> Instagram Captions
-                    </li>
-                    <li data-tool="Email Outreach">
-                        <i class="fa-solid fa-envelope-open-text"></i> Email Outreach
-                    </li>
-                    <li data-tool="Email Outreach">
-                        <i class="fa-solid fa-envelope-open-text"></i> Email Outreach
-                    </li>
-                    <!-- History Button Added Here -->
-                    <div style="height: 1px; background: rgba(255,255,255,0.1); margin: 10px 0;"></div>
-                    <li id="historyBtn" class="history-btn">
-                        <i class="fa-solid fa-clock-rotate-left"></i> History Log
-                    </li>
-                </ul>
+            <!-- New Top Navbar (Gemini Style) -->
+        <nav class="dashboard-nav">
+            <div class="nav-left">
+            <button id="hamburgerBtn" class="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
+            <a href="index.html" class="nav-logo"><i class="fa-solid fa-wand-magic-sparkles"></i> NexoraAI</a>
             </div>
+            <button id="logoutBtn" class="btn btn-outline">Logout</button>
+        </nav>
+
+    <!-- New Slide-in Sidebar -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+    < id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <h3>AI Workspace</h3>
+            <button id="closeSidebarBtn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <ul id="toolList" class="vertical-tool-list">
+            <li class="active" data-tool="Blog Generator"><i class="fa-solid fa-pen-nib"></i> Blog Generator</li>
+            <li data-tool="Google Ads Copy"><i class="fa-brands fa-google"></i> Google Ads Copy</li>
+            <li data-tool="SEO Keywords"><i class="fa-solid fa-magnifying-glass-chart"></i> SEO Keywords</li>
+            <li data-tool="Instagram Captions"><i class="fa-brands fa-instagram"></i> Instagram Captions</li>
+            <li data-tool="YouTube Script"><i class="fa-brands fa-youtube"></i> YouTube Script</li>
+            <li data-tool="Cold Email"><i class="fa-solid fa-envelope"></i> Cold Email</li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div id="historyBtn" class="history-trigger-btn"><i class="fa-solid fa-clock-rotate-left"></i> Chat History</div>
+        </div>
         </aside>
 
         <!-- Main Content Area -->

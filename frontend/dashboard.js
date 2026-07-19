@@ -17,6 +17,27 @@ let currentTool = "Blog Generator";
 // MEMORY: Har tool ki chat history save rakhne ke liye object
 let chatMemory = {}; 
 
+// --- NEW SIDEBAR LOGIC ---
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+const sidebar = document.getElementById('sidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+// Open/Close toggle function
+function toggleSidebar() {
+    sidebar.classList.toggle('open');
+    if(sidebar.classList.contains('open')) {
+        sidebarOverlay.classList.add('show');
+    } else {
+        sidebarOverlay.classList.remove('show');
+    }
+}
+
+hamburgerBtn.addEventListener('click', toggleSidebar);
+closeSidebarBtn.addEventListener('click', toggleSidebar);
+sidebarOverlay.addEventListener('click', toggleSidebar);
+historyBtn.addEventListener('click', toggleSidebar); // History khulte hi sidebar hide ho jaye
+
 // --- CORE FUNCTIONS ---
 
 // 1. Render Chat (Tool switch hone par old chat wapas laana)
@@ -101,6 +122,11 @@ toolListItems.forEach(item => {
         aiPrompt.value = "";
         
         renderChat(); // Naya tool select hote hi uski purani chat load karo!
+
+        // --- NEW LINE: Mobile me tool select karte hi sidebar apne aap band ho jaye ---
+        if(window.innerWidth <= 768) {
+            toggleSidebar();
+        }
     });
 });
 
