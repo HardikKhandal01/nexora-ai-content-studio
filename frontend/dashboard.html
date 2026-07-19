@@ -14,61 +14,64 @@
     <div class="glow-circle shape-1"></div>
     <div class="glow-circle shape-2"></div>
 
-    <div class="dashboard-container">
-        <!-- Sidebar -->
-        <aside class="sidebar glass">
-            <!-- Clickable Logo -->
-            <a href="index.html" class="logo" style="text-decoration: none;">
-                <i class="fa-solid fa-wand-magic-sparkles"></i>
-                <span>Nexora<span class="highlight">AI</span></span>
-            </a>
-            
-            <!-- New Top Navbar (Gemini Style) -->
-        <nav class="dashboard-nav">
-            <div class="nav-left">
-            <button id="hamburgerBtn" class="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
-            <a href="index.html" class="nav-logo"><i class="fa-solid fa-wand-magic-sparkles"></i> NexoraAI</a>
-            </div>
-            <button id="logoutBtn" class="btn btn-outline">Logout</button>
-        </nav>
+    <!-- MOBILE ONLY HEADER (Hidden on Desktop) -->
+    <div class="mobile-header glass">
+        <button id="hamburgerBtn" class="hamburger-btn"><i class="fa-solid fa-bars"></i></button>
+        <a href="index.html" class="logo mobile-logo">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Nexora<span class="highlight">AI</span></span>
+        </a>
+        <button class="btn btn-outline btn-small logout-action" title="Logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+    </div>
 
-    <!-- New Slide-in Sidebar -->
+    <!-- Sidebar Overlay for Mobile -->
     <div id="sidebarOverlay" class="sidebar-overlay"></div>
-    < id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <h3>AI Workspace</h3>
-            <button id="closeSidebarBtn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        
-        <ul id="toolList" class="vertical-tool-list">
-            <li class="active" data-tool="Blog Generator"><i class="fa-solid fa-pen-nib"></i> Blog Generator</li>
-            <li data-tool="Google Ads Copy"><i class="fa-brands fa-google"></i> Google Ads Copy</li>
-            <li data-tool="SEO Keywords"><i class="fa-solid fa-magnifying-glass-chart"></i> SEO Keywords</li>
-            <li data-tool="Instagram Captions"><i class="fa-brands fa-instagram"></i> Instagram Captions</li>
-            <li data-tool="YouTube Script"><i class="fa-brands fa-youtube"></i> YouTube Script</li>
-            <li data-tool="Cold Email"><i class="fa-solid fa-envelope"></i> Cold Email</li>
-        </ul>
 
-        <div class="sidebar-footer">
-            <div id="historyBtn" class="history-trigger-btn"><i class="fa-solid fa-clock-rotate-left"></i> Chat History</div>
-        </div>
+    <div class="dashboard-container">
+        
+        <!-- SIDEBAR (Fixed on Desktop, Slide-in on Mobile) -->
+        <aside id="sidebar" class="sidebar glass">
+            <div class="sidebar-header">
+                <a href="index.html" class="logo" style="text-decoration: none;">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>Nexora<span class="highlight">AI</span></span>
+                </a>
+                <button id="closeSidebarBtn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <p class="menu-label">AI TOOLS</p>
+            <ul id="toolList">
+                <li class="active" data-tool="Blog Generator"><i class="fa-solid fa-pen-nib"></i> Blog Generator</li>
+                <li data-tool="Google Ads Copy"><i class="fa-brands fa-google"></i> Google Ads Copy</li>
+                <li data-tool="SEO Keywords"><i class="fa-solid fa-magnifying-glass-chart"></i> SEO Keywords</li>
+                <li data-tool="Instagram Captions"><i class="fa-brands fa-instagram"></i> Instagram Captions</li>
+                <li data-tool="YouTube Script"><i class="fa-brands fa-youtube"></i> YouTube Script</li>
+                <li data-tool="Cold Email"><i class="fa-solid fa-envelope"></i> Cold Email</li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <button id="historyBtn" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Chat History
+                </button>
+            </div>
         </aside>
 
-        <!-- Main Content Area -->
+        <!-- MAIN CONTENT AREA -->
         <main class="main-content">
             <!-- Top Header -->
             <header class="dashboard-header glass">
                 <h2 id="currentToolTitle">Blog Generator</h2>
                 <div class="user-profile">
                     <span id="userNameDisplay">Welcome, User</span>
-                    <button id="logoutBtn" class="btn btn-secondary btn-small">
+                    <button class="btn btn-secondary btn-small logout-action">
                         <i class="fa-solid fa-right-from-bracket"></i> Logout
                     </button>
                 </div>
             </header>
 
             <!-- Workspace Area -->
-            <!-- Chat Workspace Area (Replaced) -->
             <div class="workspace chat-workspace">
                 <!-- Chat Feed -->
                 <div class="chat-container glass" id="chatContainer">
@@ -78,15 +81,15 @@
                     </div>
                 </div>
 
-                <!-- Bottom Input Box (ChatGPT Style) -->
-                 <!-- Export Features -->
-                <div style="display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 10px; padding-right: 15px;">
+                <!-- Bottom Input & Export Box -->
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 10px; padding-right: 5px;">
                     <button id="exportBtn" class="btn btn-secondary btn-small" title="Download Document">
                         <i class="fa-solid fa-file-arrow-down"></i> Download Text
                     </button>
                 </div>
+                
                 <div class="chat-input-box glass">
-                    <textarea id="aiPrompt" rows="1" placeholder="Type your prompt here (e.g. write a short blog on AI)..."></textarea>
+                    <textarea id="aiPrompt" rows="1" placeholder="Type your prompt here..."></textarea>
                     <button id="generateBtn" class="btn btn-primary send-btn">
                         <i class="fa-solid fa-paper-plane"></i>
                     </button>
@@ -94,10 +97,11 @@
             </div>
         </main>
     </div>
+
     <!-- History Modal -->
     <div id="historyModal" class="modal-overlay hidden">
         <div class="modal-content glass history-modal">
-            <button id="closeHistoryModal" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+            <button id="closeHistoryModal" class="close-btn" style="display: block;"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-header">
                 <h2><i class="fa-solid fa-clock-rotate-left"></i> Your History</h2>
                 <p>Access your past AI generations</p>
@@ -108,9 +112,9 @@
         </div>
     </div>
 
-    <!-- Script Specific to Dashboard -->
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- For markdown formatting -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="dashboard.js"></script>
 </body>
 </html>

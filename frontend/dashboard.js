@@ -3,7 +3,6 @@ const token = localStorage.getItem('nexora_token');
 
 if (!token) window.location.href = "index.html";
 
-const logoutBtn = document.getElementById('logoutBtn');
 const toolListItems = document.querySelectorAll('#toolList li');
 const currentToolTitle = document.getElementById('currentToolTitle');
 const aiPrompt = document.getElementById('aiPrompt');
@@ -17,7 +16,7 @@ let currentTool = "Blog Generator";
 // MEMORY: Har tool ki chat history save rakhne ke liye object
 let chatMemory = {}; 
 
-// --- NEW SIDEBAR LOGIC ---
+// --- SIDEBAR LOGIC (For Mobile) ---
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const closeSidebarBtn = document.getElementById('closeSidebarBtn');
 const sidebar = document.getElementById('sidebar');
@@ -33,50 +32,37 @@ function toggleSidebar() {
     }
 }
 
-hamburgerBtn.addEventListener('click', toggleSidebar);
-closeSidebarBtn.addEventListener('click', toggleSidebar);
-sidebarOverlay.addEventListener('click', toggleSidebar);
-historyBtn.addEventListener('click', toggleSidebar); // History khulte hi sidebar hide ho jaye
+if(hamburgerBtn) hamburgerBtn.addEventListener('click', toggleSidebar);
+if(closeSidebarBtn) closeSidebarBtn.addEventListener('click', toggleSidebar);
+if(sidebarOverlay) sidebarOverlay.addEventListener('click', toggleSidebar);
 
 // --- CORE FUNCTIONS ---
-
-// 1. Render Chat (Tool switch hone par old chat wapas laana)
 function renderChat() {
-    chatContainer.innerHTML = ''; // Box clear karo
-    
-    // Agar is tool ki koi memory nahi hai
+    chatContainer.innerHTML = ''; 
     if (!chatMemory[currentTool] || chatMemory[currentTool].length === 0) {
         chatContainer.appendChild(emptyState);
         emptyState.style.display = 'flex';
         return;
     }
-
     emptyState.style.display = 'none';
-
-    // Memory se messages read karke UI par lagao
     chatMemory[currentTool].forEach(msg => {
         appendMessage(msg.role, msg.content, false);
     });
     scrollToBottom();
 }
 
-// 2. Append Message (Bubble banakar screen par dikhana)
 function appendMessage(role, content, saveToMemory = true) {
     emptyState.style.display = 'none';
-
     const msgDiv = document.createElement('div');
     msgDiv.classList.add('chat-message');
     msgDiv.classList.add(role === 'user' ? 'user-message' : 'ai-message');
 
     if (role === 'ai') {
-        // AI message me formatting aur copy button add karna
         const parsedContent = marked.parse(content);
         msgDiv.innerHTML = `
             <button class="msg-copy-btn" title="Copy"><i class="fa-regular fa-copy"></i></button>
             <div class="msg-content">${parsedContent}</div>
         `;
-        
-        // Copy functionality for this specific bubble
         const copyBtn = msgDiv.querySelector('.msg-copy-btn');
         copyBtn.addEventListener('click', () => {
             navigator.clipboard.writeText(content).then(() => {
@@ -94,7 +80,6 @@ function appendMessage(role, content, saveToMemory = true) {
         if (!chatMemory[currentTool]) chatMemory[currentTool] = [];
         chatMemory[currentTool].push({ role, content });
     }
-    
     scrollToBottom();
 }
 
@@ -104,10 +89,13 @@ function scrollToBottom() {
 
 // --- EVENT LISTENERS ---
 
-// Logout
-logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('nexora_token');
-    window.location.href = "index.html";
+// Logout (Handle multiple buttons for desktop/mobile)
+const logoutBtns = document.querySelectorAll('.logout-action');
+logoutBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        localStorage.removeItem('nexora_token');
+        window.location.href = "index.html";
+    });
 });
 
 // Sidebar Tool Switching
@@ -121,16 +109,15 @@ toolListItems.forEach(item => {
         emptyStateText.innerText = `Welcome to ${currentTool}. What would you like to create?`;
         aiPrompt.value = "";
         
-        renderChat(); // Naya tool select hote hi uski purani chat load karo!
+        renderChat(); 
 
-        // --- NEW LINE: Mobile me tool select karte hi sidebar apne aap band ho jaye ---
+        // Mobile me tool select karte hi sidebar apne aap band ho jaye
         if(window.innerWidth <= 768) {
             toggleSidebar();
         }
     });
 });
 
-// Textarea Auto-resize (ChatGPT jaisa feel)
 aiPrompt.addEventListener('input', function() {
     this.style.height = 'auto';
     this.style.height = (this.scrollHeight) + 'px';
@@ -141,19 +128,16 @@ generateBtn.addEventListener('click', async () => {
     const promptText = aiPrompt.value.trim();
     if (!promptText) return;
 
-    // 1. User ka message UI aur Memory me add karo
     appendMessage('user', promptText);
     aiPrompt.value = '';
-    aiPrompt.style.height = 'auto'; // reset height
+    aiPrompt.style.height = 'auto'; 
 
-    // 2. Loading State (Temporary AI bubble)
     const loadingDiv = document.createElement('div');
     loadingDiv.classList.add('chat-message', 'ai-message');
     loadingDiv.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Generating...';
     chatContainer.appendChild(loadingDiv);
     scrollToBottom();
 
-    // 3. API Call
     try {
         const response = await fetch(`${API_BASE_URL}/generate`, {
             method: 'POST',
@@ -175,7 +159,6 @@ generateBtn.addEventListener('click', async () => {
         if (!response.ok) throw new Error("Failed to generate content.");
         const data = await response.json();
         
-        // 4. Remove loading bubble and show real AI message
         chatContainer.removeChild(loadingDiv);
         appendMessage('ai', data.generated_text);
         
@@ -185,31 +168,27 @@ generateBtn.addEventListener('click', async () => {
     }
 });
 
-// Enter key press par send karna (Shift+Enter for new line)
 aiPrompt.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         generateBtn.click();
     }
 });
-// --- HISTORY PANEL LOGIC ---
 
+// --- HISTORY PANEL LOGIC ---
 const historyBtn = document.getElementById('historyBtn');
 const historyModal = document.getElementById('historyModal');
 const closeHistoryModal = document.getElementById('closeHistoryModal');
 const historyList = document.getElementById('historyList');
 
-// Open History Panel & Fetch Data
 historyBtn.addEventListener('click', async () => {
-    historyModal.classList.remove('hidden');
+    // If on mobile, close sidebar when opening history
+    if(window.innerWidth <= 768) {
+        toggleSidebar();
+    }
     
-    // Show Loading
-    historyList.innerHTML = `
-        <div class="empty-state">
-            <i class="fa-solid fa-spinner fa-spin"></i>
-            <p>Fetching your past chats from database...</p>
-        </div>
-    `;
+    historyModal.classList.remove('hidden');
+    historyList.innerHTML = `<div class="empty-state"><i class="fa-solid fa-spinner fa-spin"></i><p>Fetching your past chats from database...</p></div>`;
 
     try {
         const response = await fetch(`${API_BASE_URL}/history`, {
@@ -219,18 +198,11 @@ historyBtn.addEventListener('click', async () => {
         if (!response.ok) throw new Error("Failed to load history.");
         const data = await response.json();
 
-        // Agar history khali hai
         if (data.length === 0) {
-            historyList.innerHTML = `
-                <div class="empty-state">
-                    <i class="fa-regular fa-clock"></i>
-                    <p>No history found yet. Start generating!</p>
-                </div>
-            `;
+            historyList.innerHTML = `<div class="empty-state"><i class="fa-regular fa-clock"></i><p>No history found yet. Start generating!</p></div>`;
             return;
         }
 
-        // Data show karna
         historyList.innerHTML = '';
         data.forEach(item => {
             const dateStr = new Date(item.created_at).toLocaleString('en-US', { 
@@ -247,9 +219,7 @@ historyBtn.addEventListener('click', async () => {
                 <div class="hist-prompt"><strong>Prompt:</strong> ${item.prompt_input}</div>
             `;
 
-            // Click karne par history load karna
             histDiv.addEventListener('click', () => {
-                // Tool switch karo
                 currentTool = item.tool_name;
                 currentToolTitle.innerText = currentTool;
                 
@@ -258,15 +228,12 @@ historyBtn.addEventListener('click', async () => {
                     if(li.getAttribute('data-tool') === currentTool) li.classList.add('active');
                 });
 
-                // Chat memory me wapas daalo aur render karo
                 if (!chatMemory[currentTool]) chatMemory[currentTool] = [];
-                
-                // Add to memory
                 chatMemory[currentTool].push({ role: 'user', content: item.prompt_input });
                 chatMemory[currentTool].push({ role: 'ai', content: item.generated_content });
 
-                renderChat(); // UI refresh
-                historyModal.classList.add('hidden'); // Modal close
+                renderChat(); 
+                historyModal.classList.add('hidden'); 
             });
 
             historyList.appendChild(histDiv);
@@ -277,15 +244,14 @@ historyBtn.addEventListener('click', async () => {
     }
 });
 
-// Close History Modal
 closeHistoryModal.addEventListener('click', () => {
     historyModal.classList.add('hidden');
 });
+
 // --- EXPORT TO DOCUMENT FEATURE ---
 const exportBtn = document.getElementById('exportBtn');
 
 exportBtn.addEventListener('click', () => {
-    // Chat container me jo text hai usko fetch karna
     let contentToExport = "";
     const messages = chatContainer.querySelectorAll('.chat-message');
     
@@ -298,13 +264,11 @@ exportBtn.addEventListener('click', () => {
         if (msg.classList.contains('user-message')) {
             contentToExport += `\n--- PROMPT ---\n${msg.innerText}\n\n`;
         } else {
-            // Remove 'Copy' text from the AI message parsing
             let aiText = msg.innerText.replace('Copy', '').trim();
             contentToExport += `--- AI RESULT ---\n${aiText}\n\n=========================\n`;
         }
     });
 
-    // Create and download a .txt file
     const blob = new Blob([contentToExport], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
