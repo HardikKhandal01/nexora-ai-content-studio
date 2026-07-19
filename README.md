@@ -19,11 +19,11 @@ Nexora AI is a comprehensive SaaS platform designed to eliminate writer's block.
 
 ### Landing Page & Pricing
 *(Showcasing the premium Light-theme glassmorphism UI and conversion-focused design)*
-![Homepage Screenshot](Assets/home-page.png)
+(![Assets/home-page (2).png](<Assets/home-page (2).png>))
 
 ### AI Dashboard Workspace
 *(Showcasing the ChatGPT-style chat interface, sidebar tools, and export functionality)*
-![Dashboard Screenshot](Assets/dashboard.png)
+(![Assets/dashboard (2).png](<Assets/dashboard (2).png>))
 
 ---
 
@@ -101,5 +101,5 @@ This project is built with scalability in mind. Future upgrades include:
 *   Export to PDF functionality.
 
 <div align="center">
-  <p>Developed with passion by <b>Your Name</b></p>
+  <p>Developed with passion by <b>Hardik Sharma</b></p>
 </div>
