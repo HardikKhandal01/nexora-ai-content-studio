@@ -1,3 +1,10 @@
+// Ninja Ping: Wake up Render server in the background silently
+const RENDER_BACKEND_URL = "https://nexora-backend-m37r.onrender.com"; // Yahan apna asli Render URL daalna
+
+fetch(`${RENDER_BACKEND_URL}/docs`)
+    .then(() => console.log("✅ AI Engine is awake and ready!"))
+    .catch(() => console.log("Waking up AI Engine..."));
+
 // Ensure DOM is fully loaded before animating
 document.addEventListener("DOMContentLoaded", () => {
     
@@ -52,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "back.out(1.2)"
     });
 });
+
 // --- MODAL & AUTHENTICATION LOGIC ---
 
 // Elements
@@ -130,8 +138,31 @@ modal.addEventListener('click', (e) => {
 
 // Initial attachment for toggle button
 toggleAuthMode.addEventListener('click', toggleMode);
-// --- API CONNECTION FOR LOGIN & SIGNUP ---
 
+
+// --- NEW: PREMIUM LOADER FUNCTIONS ---
+// Show Premium Loader overlay
+function showServerLoader() {
+    const loader = document.createElement('div');
+    loader.id = 'premium-server-loader';
+    loader.innerHTML = `
+        <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.7); backdrop-filter:blur(8px); display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999; text-align:center;">
+            <i class="fa-solid fa-wand-magic-sparkles fa-spin" style="font-size: 50px; color: #005571; margin-bottom:20px;"></i>
+            <h2 style="color:#111; font-family:sans-serif; margin-bottom:10px;">Initializing AI Engine... 🚀</h2>
+            <p style="color:#555; font-family:sans-serif; font-size:16px;">Booting up secure servers. This might take 30-50 seconds.<br>Grab a sip of water!</p>
+        </div>
+    `;
+    document.body.appendChild(loader);
+}
+
+// Hide Premium Loader overlay
+function hideServerLoader() {
+    const loader = document.getElementById('premium-server-loader');
+    if (loader) loader.remove();
+}
+
+
+// --- API CONNECTION FOR LOGIN & SIGNUP ---
 const authForm = document.getElementById('authForm');
 const fullNameInput = document.getElementById('fullName');
 const emailInput = document.getElementById('email');
@@ -146,6 +177,9 @@ authForm.addEventListener('submit', async (e) => {
     const originalBtnText = submitAuthBtn.innerHTML;
     submitAuthBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
     submitAuthBtn.disabled = true;
+
+    // Jaise hi user Login/Signup par click karega, Premium Loader screen par aa jayega
+    showServerLoader();
 
     try {
         if (isLoginMode) {
@@ -168,7 +202,7 @@ authForm.addEventListener('submit', async (e) => {
             // Save Token securely in browser
             localStorage.setItem('nexora_token', data.access_token);
             
-            // Redirect to dashboard (jo hum next step me banayenge)
+            // Redirect to dashboard
             window.location.href = "dashboard.html";
 
         } else {
@@ -197,8 +231,9 @@ authForm.addEventListener('submit', async (e) => {
     } catch (error) {
         alert(error.message); // Agar koi error aayi (jaise wrong password) to alert dikhayega
     } finally {
-        // Button ko wapas normal kar do
+        // Button ko wapas normal kar do aur Premium loader hata do
         submitAuthBtn.innerHTML = originalBtnText;
         submitAuthBtn.disabled = false;
+        hideServerLoader(); 
     }
 });
