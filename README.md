@@ -101,5 +101,5 @@ This project is built with scalability in mind. Future upgrades include:
 *   Export to PDF functionality.
 
 <div align="center">
-  <p>Developed with passion by <b>Your Name</b></p>
+  <p>Developed with passion by <b>Hardik Sharma</b></p>
 </div>
