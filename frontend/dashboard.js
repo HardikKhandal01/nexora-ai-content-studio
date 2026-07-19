@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "https://nexora-backend-m37r.onrender.com";
 const token = localStorage.getItem('nexora_token');
 
 if (!token) window.location.href = "index.html";

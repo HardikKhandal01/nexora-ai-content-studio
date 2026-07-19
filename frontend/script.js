@@ -137,7 +137,7 @@ const fullNameInput = document.getElementById('fullName');
 const emailInput = document.getElementById('email');
 const passwordInput = document.getElementById('password');
 
-const API_BASE_URL = "http://127.0.0.1:8000"; // Tumhara FastAPI backend port
+const API_BASE_URL = "https://nexora-backend-m37r.onrender.com"; // Tumhara FastAPI backend port
 
 authForm.addEventListener('submit', async (e) => {
     e.preventDefault(); // Ye page reload hone se rokega!
