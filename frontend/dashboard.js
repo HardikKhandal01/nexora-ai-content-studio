@@ -23,12 +23,15 @@ const sidebar = document.getElementById('sidebar');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
 
 // Open/Close toggle function
+// Open/Close toggle function
 function toggleSidebar() {
     sidebar.classList.toggle('open');
     if(sidebar.classList.contains('open')) {
         sidebarOverlay.classList.add('show');
+        sidebarOverlay.style.display = 'block'; // Force visibility
     } else {
         sidebarOverlay.classList.remove('show');
+        sidebarOverlay.style.display = 'none'; // Force hide completely
     }
 }
 

@@ -1053,6 +1053,7 @@ ul {
         width: 100vw;
         height: 100vh;
         background: rgba(4, 52, 76, 0.2);
+        pointer-events: none;
         z-index: 998;
     }
     
